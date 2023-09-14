@@ -1,12 +1,21 @@
 from flask import Flask, request
 import requests
 from prometheus_flask_exporter import PrometheusMetrics
+import logging
+import logging.handlers
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+logger.info("Service 2 started")
 
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
 metrics.info("app_info", "service2", version="1.0.3")
+
+
 
 
 @metrics.counter (
@@ -17,6 +26,8 @@ metrics.info("app_info", "service2", version="1.0.3")
 
 @app.route('/')
 def hello_world():
+
+    logger.info("Service 2 callled")
     r = requests.get("http://service1:5001")
     return f"Hello from Service 2. Service 1 says: {r.text}!"
 

@@ -1,5 +1,13 @@
 from flask import Flask, request
 from prometheus_flask_exporter import PrometheusMetrics
+import requests
+import logging
+import logging.handlers
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+logger.info("Service 2 started")
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
